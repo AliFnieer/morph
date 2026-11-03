@@ -28,3 +28,14 @@ morph completion bash > /etc/bash_completion.d/morph
 - Offline only, privacy-focused
 - Flags-based CLI
 - Supports many formats across documents, images, data, archives, office, ebooks
+
+## New Features
+- Batch/glob support: `morph --in "*.png" --to jpg`
+- Directory processing: `morph --in ./folder/ --to pdf --recursive`
+- Stdin/stdout: `cat file.json | morph --in - --to yaml --out -`
+- `morph doctor`, `morph version`, `morph completion`
+- Verbose/quiet/force flags
+- PDF text extraction
+- Office writing (txt/md -> docx, csv/txt -> xlsx)
+- Fuzzy suggestions for unknown conversions
+- Man page in `man/`

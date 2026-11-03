@@ -131,3 +131,27 @@ func category(name string) string {
 		return "Other"
 	}
 }
+
+type Pair struct {
+	From string
+	To   string
+}
+
+func AllPairs() []Pair {
+	type p struct{ f, t string }
+	seen := map[p]bool{}
+	var out []Pair
+	for _, c := range converters {
+		for _, f := range c.From() {
+			for _, t := range c.To() {
+				pr := p{f, t}
+				if seen[pr] {
+					continue
+				}
+				seen[pr] = true
+				out = append(out, Pair{From: f, To: t})
+			}
+		}
+	}
+	return out
+}

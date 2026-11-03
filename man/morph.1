@@ -1,0 +1,51 @@
+.TH MORPH 1 "2026-10-30" "morph 0.2.0" "User Commands"
+.SH NAME
+morph \- privacy-focused offline file format converter
+.SH SYNOPSIS
+.B morph
+[\fB--in\fR \fIFILE\fR] [\fB--to\fR \fIFORMAT\fR] [\fB--out\fR \fIFILE\fR] [\fIOPTIONS\fR]
+.B morph doctor
+.B morph completion \fIshell\fR
+.B morph version
+.SH DESCRIPTION
+morph is an offline-only CLI tool for converting between many file formats.
+.SH OPTIONS
+.TP
+.BR --in " " \fIFILE\fR
+Input file, use - for stdin, glob pattern, or directory
+.TP
+.BR --to " " \fIFORMAT\fR
+Target format
+.TP
+.BR --out " " \fIFILE\fR
+Output file, use - for stdout
+.TP
+.BR --list
+List supported conversions
+.TP
+.BR --list-json
+List supported conversions as JSON
+.TP
+.BR --force
+Overwrite existing output
+.TP
+.BR --quiet
+Minimal output
+.TP
+.BR --verbose
+Verbose output
+.TP
+.BR --recursive
+Process directories recursively
+.SH EXAMPLES
+.TP
+morph --in image.png --to jpg
+Convert image
+.TP
+morph --in "*.txt" --to pdf
+Batch convert
+.TP
+cat data.json | morph --in - --to yaml --out -
+Pipe conversion
+.SH AUTHOR
+AliFnieer
