@@ -2,7 +2,6 @@ package rawconv
 
 import (
 	"os"
-	"strings"
 
 	"github.com/AliFnieer/morph/internal/registry"
 )
@@ -28,18 +27,6 @@ func (c *conv) Convert(in, out string) error {
 	}
 	// For unsupported encoded formats, try byte copy if user explicitly requests
 	return os.WriteFile(out, data, 0644)
-}
-
-func getExt(path string) string {
-	for i := len(path) - 1; i >= 0; i-- {
-		if path[i] == '.' {
-			return strings.ToLower(path[i+1:])
-		}
-		if path[i] == '/' || path[i] == '\\' {
-			break
-		}
-	}
-	return ""
 }
 
 type Conv = conv

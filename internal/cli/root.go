@@ -85,7 +85,7 @@ func Run(args []string) error {
 	if info, err := os.Stat(*input); err == nil && info.IsDir() {
 		var files []string
 		if *recursive {
-			filepath.Walk(*input, func(path string, fi os.FileInfo, err error) error {
+			if err := filepath.Walk(*input, func(path string, fi os.FileInfo, err error) error {
 				if err != nil {
 					return nil
 				}
@@ -93,7 +93,9 @@ func Run(args []string) error {
 					files = append(files, path)
 				}
 				return nil
-			})
+			}); err != nil {
+				return err
+			}
 		} else {
 			entries, _ := os.ReadDir(*input)
 			for _, e := range entries {
@@ -130,7 +132,7 @@ func convertOne(input, dstFmt, output, from string, force, quiet, verbose bool) 
 		if err := os.WriteFile(tmpIn, data, 0644); err != nil {
 			return err
 		}
-		defer os.Remove(tmpIn)
+		defer func() { _ = os.Remove(tmpIn) }()
 		input = tmpIn
 	} else {
 		if _, err := os.Stat(input); os.IsNotExist(err) {
@@ -141,17 +143,14 @@ func convertOne(input, dstFmt, output, from string, force, quiet, verbose bool) 
 	out := output
 	if out == "" {
 		out = defaultOutput(input, dstFmt)
-		if strings.Contains(input, "morph-stdin") {
-			// will go to stdout if requested elsewhere
-		}
 	}
 	if out == "-" {
 		out = "/tmp/morph-stdout-" + fmt.Sprintf("%d", os.Getpid()) + "-" + fmt.Sprintf("%d", time.Now().UnixNano()) + "." + dstFmt
 		defer func() {
 			if data, err := os.ReadFile(out); err == nil {
-				os.Stdout.Write(data)
+				_, _ = os.Stdout.Write(data)
 			}
-			os.Remove(out)
+			_ = os.Remove(out)
 		}()
 	} else if !force {
 		if _, err := os.Stat(out); err == nil {

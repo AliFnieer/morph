@@ -1,10 +1,32 @@
+version: "2"
+
 run:
   timeout: 5m
+
 linters:
   enable:
-    - gofmt
-    - govet
     - errcheck
-    - staticcheck
+    - govet
     - ineffassign
+    - staticcheck
     - unused
+  settings:
+    errcheck:
+      exclude-functions:
+        - (*os.File).Close
+        - (io.Closer).Close
+        - (*archive/zip.ReadCloser).Close
+        - (*archive/zip.Writer).Close
+        - (*compress/gzip.Reader).Close
+        - (*compress/gzip.Writer).Close
+        - (*archive/tar.Writer).Close
+        - (*encoding/csv.Writer).Flush
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - errcheck
+
+formatters:
+  enable:
+    - gofmt

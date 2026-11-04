@@ -98,34 +98,34 @@ func contains(list []string, s string) bool {
 }
 
 func category(name string) string {
-	switch {
-	case name == "stdlib-image" || name == "x/image" || name == "x/image-tiff":
+	switch name {
+	case "stdlib-image", "x/image", "x/image-tiff":
 		return "Images"
-	case name == "oksvg":
+	case "oksvg":
 		return "Vector"
-	case name == "morph-data":
+	case "morph-data":
 		return "Data/Config"
-	case name == "stdlib-text" || name == "morph-html":
+	case "stdlib-text", "morph-html":
 		return "Text/Markup"
-	case name == "morph-pdf" || name == "morph-pdf-minimal":
+	case "morph-pdf", "morph-pdf-minimal":
 		return "Documents"
-	case name == "morph-office-minimal":
+	case "morph-office-minimal":
 		return "Office"
-	case name == "morph-ooxml":
+	case "morph-ooxml":
 		return "Office (OOXML)"
-	case name == "morph-odf":
+	case "morph-odf":
 		return "Office (ODF)"
-	case name == "morph-epub":
+	case "morph-epub":
 		return "Ebooks"
-	case name == "morph-rtf":
+	case "morph-rtf":
 		return "Documents"
-	case name == "morph-archive":
+	case "morph-archive":
 		return "Archives"
-	case name == "morph-audio":
+	case "morph-audio":
 		return "Audio"
-	case name == "morph-video-stub":
+	case "morph-video-stub":
 		return "Video"
-	case name == "morph-raw-copy":
+	case "morph-raw-copy":
 		return "Raw/Other"
 	default:
 		return "Other"

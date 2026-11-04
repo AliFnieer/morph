@@ -30,8 +30,8 @@ func main() {
 	}
 	if len(os.Args) > 1 && os.Args[1] == "completion" {
 		if len(os.Args) > 2 {
-			shell := os.Args[2]
-			if shell == "bash" {
+			switch os.Args[2] {
+			case "bash":
 				fmt.Print(`_morph() {
     local cur prev opts
     COMPREPLY=()
@@ -46,10 +46,10 @@ func main() {
 complete -F _morph morph
 `)
 				return
-			} else if shell == "zsh" {
+			case "zsh":
 				fmt.Print("#compdef morph\n_morph() {\n  _arguments '--in[Input file]:file:_files' '--to[Target format]:format:' '--out[Output file]:file:_files' '--from[Source format]:format:' '--list[List conversions]' '--list-json[List as JSON]' '--force[Overwrite]' '--quiet[Quiet]' '--verbose[Verbose]' '--version[Version]' '--help[Help]' 'doctor[Run doctor]' 'completion[Generate completion]:shell:(bash zsh fish)'\n}\n")
 				return
-			} else if shell == "fish" {
+			case "fish":
 				fmt.Print("complete -c morph -l in -d 'Input file' -r -F\ncomplete -c morph -l to -d 'Target format'\ncomplete -c morph -l out -d 'Output file' -r -F\ncomplete -c morph -l from -d 'Source format'\ncomplete -c morph -l list -d 'List conversions'\ncomplete -c morph -l list-json -d 'List as JSON'\ncomplete -c morph -l force -d 'Overwrite'\ncomplete -c morph -l quiet -d 'Quiet'\ncomplete -c morph -l verbose -d 'Verbose'\ncomplete -c morph -l version -d 'Version'\ncomplete -c morph -s h -l help -d 'Help'\ncomplete -c morph -a doctor -d 'Run doctor'\ncomplete -c morph -a version -d 'Show version'\ncomplete -c morph -a completion -d 'Generate completion'\n")
 				return
 			}

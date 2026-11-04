@@ -42,9 +42,6 @@ func (c *pdfReader) Convert(in, out string) error {
 	if outExt == "html" {
 		all = "<html><body><pre>" + htmlEscape(all) + "</pre></body></html>"
 	}
-	if outExt == "md" {
-		// keep as text
-	}
 	return os.WriteFile(out, []byte(all), 0644)
 }
 

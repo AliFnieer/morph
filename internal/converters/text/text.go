@@ -3,7 +3,6 @@ package textconv
 import (
 	"encoding/csv"
 	"encoding/json"
-	"io"
 	"os"
 	"strings"
 
@@ -140,14 +139,6 @@ func getExt(path string) string {
 		}
 	}
 	return ""
-}
-
-func copyReader(r io.Reader, out string) error {
-	data, err := io.ReadAll(r)
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(out, data, 0644)
 }
 
 // Make sure init runs
