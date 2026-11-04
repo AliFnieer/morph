@@ -29,11 +29,12 @@ func (c *conv) Convert(in, out string) error {
 	defer r.Close()
 
 	var all string
-	if inExt == "docx" {
+	switch inExt {
+	case "docx":
 		all = extractDocx(r)
-	} else if inExt == "xlsx" {
+	case "xlsx":
 		all = extractXlsx(r)
-	} else if inExt == "pptx" {
+	case "pptx":
 		all = extractPptx(r)
 	}
 

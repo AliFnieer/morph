@@ -32,25 +32,33 @@ func (c *docxWriter) Convert(in, out string) error {
 	w := zip.NewWriter(zf)
 	defer w.Close()
 
-	// [Content_Types].xml
-	ct := `[Content_Types].xml`
-	f, _ := w.Create(ct)
-	f.Write([]byte(`<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>`))
+	if err := writeZipPart(w, "[Content_Types].xml", `<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>`); err != nil {
+		return err
+	}
 
-	// _rels/.rels
-	f, _ = w.Create("_rels/.rels")
-	f.Write([]byte(`<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`))
+	if err := writeZipPart(w, "_rels/.rels", `<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`); err != nil {
+		return err
+	}
 
-	// word/document.xml
-	f, _ = w.Create("word/document.xml")
 	doc := `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>`
 	for _, line := range strings.Split(text, "\n") {
 		doc += `<w:p><w:r><w:t>` + escapeXML(line) + `</w:t></w:r></w:p>`
 	}
 	doc += `<w:sectPr/></w:body></w:document>`
-	f.Write([]byte(doc))
+	if err := writeZipPart(w, "word/document.xml", doc); err != nil {
+		return err
+	}
 
 	return nil
+}
+
+func writeZipPart(w *zip.Writer, name, content string) error {
+	f, err := w.Create(name)
+	if err != nil {
+		return err
+	}
+	_, err = f.Write([]byte(content))
+	return err
 }
 
 func escapeXML(s string) string {
