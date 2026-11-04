@@ -1,4 +1,10 @@
 # morph
+
+[![CI](https://github.com/AliFnieer/morph/actions/workflows/ci.yml/badge.svg)](https://github.com/AliFnieer/morph/actions/workflows/ci.yml)
+[![Release](https://github.com/AliFnieer/morph/actions/workflows/release.yml/badge.svg)](https://github.com/AliFnieer/morph/actions/workflows/release.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/AliFnieer/morph)](https://goreportcard.com/report/github.com/AliFnieer/morph)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 ## Features
 - Offline only, privacy-focused CLI
 - Flags-based: `morph --in file --to format [--out file] [--from format]`
