@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-04
+
+### Added
+
+- Unit tests for the registry, format detection, and text/data converters.
+- Dependabot configuration for Go modules and GitHub Actions.
+- Issue and pull request templates.
+
+### Changed
+
+- Bump GitHub Actions: `checkout` to v7, `setup-go` to v7, and
+  `goreleaser-action` to v7.
+
+### Fixed
+
+- Resolve `golangci-lint` findings and run the linter in CI.
+- Run the 13 integration tests in `tests/more_test2.go` that were previously
+  skipped because the file was not named `*_test.go`.
+- Report the actual version in `morph doctor` instead of a hardcoded value.
+
 ## [0.1.0] - 2026-11-04
 
 ### Added
@@ -21,5 +41,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Verbose/quiet/force flags, PDF text extraction, and fuzzy conversion suggestions.
 - CI workflow, GoReleaser release configuration, and integration test suite.
 
-[Unreleased]: https://github.com/AliFnieer/morph/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/AliFnieer/morph/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/AliFnieer/morph/releases/tag/v0.1.1
 [0.1.0]: https://github.com/AliFnieer/morph/releases/tag/v0.1.0
