@@ -25,7 +25,7 @@ func main() {
 		return
 	}
 	if len(os.Args) > 1 && os.Args[1] == "doctor" {
-		cli.RunDoctor()
+		cli.RunDoctor(version)
 		return
 	}
 	if len(os.Args) > 1 && os.Args[1] == "completion" {
